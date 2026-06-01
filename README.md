@@ -68,8 +68,7 @@ indian-aviation-pipeline/
 │   └── fetch_opensky.py             # OpenSky API ingestion script
 ├── upload/
 │   └── upload_to_gcs.py             # GCS upload script
-├── transforms/
-│   └── bigquery_transforms.sql      # BigQuery SQL transforms
+├── bigquery_transforms.sql      # BigQuery SQL transforms
 ├── .env.example                     # Environment variable template
 └── README.md
 ```
@@ -113,7 +112,7 @@ pip install requests pandas google-cloud-storage google-cloud-bigquery pyarrow p
 
 ### 3. Configure environment variables
 ```bash
-cp .env.example .env
+copy .env.example .env
 ```
 Edit `.env` with your credentials:
 ```
