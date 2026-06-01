@@ -34,7 +34,7 @@ INDIAN_FLIGHTS.ANALYTICS
 └── FLIGHT_FEATURES
         │
         ▼
-Looker Studio Dashboard (3 pages)
+Data Studio Dashboard (3 pages)
 ```
 
 ---
@@ -54,7 +54,10 @@ Looker Studio Dashboard (3 pages)
 - Flight count by duration category
 - Flights by departure hour (line chart)
 
-> Dashboard built on Snowflake data connected via Looker Studio's partner connector.
+> Dashboard built on Snowflake data connected via Data Studio's partner connector.
+
+<img width="1655" height="658" alt="image" src="https://github.com/user-attachments/assets/4ca6d203-bf16-44ea-adfd-9e1c9a964b35" />
+
 
 **[Live Dashboard](https://datastudio.google.com/reporting/ac64b087-7560-4a01-9d44-6869dd18539f)**
 
