@@ -56,6 +56,8 @@ Looker Studio Dashboard (3 pages)
 
 > Dashboard built on Snowflake data connected via Looker Studio's partner connector.
 
+**[Live Dashboard](https://datastudio.google.com/reporting/ac64b087-7560-4a01-9d44-6869dd18539f)**
+
 ---
 
 ## Project Structure
