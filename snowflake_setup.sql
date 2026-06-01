@@ -1,0 +1,85 @@
+-- ============================================
+-- SETUP
+-- ============================================
+CREATE DATABASE INDIAN_FLIGHTS;
+CREATE SCHEMA INDIAN_FLIGHTS.ANALYTICS;
+USE DATABASE INDIAN_FLIGHTS;
+USE SCHEMA ANALYTICS;
+CREATE OR REPLACE STORAGE INTEGRATION gcs_integration
+    TYPE = EXTERNAL_STAGE
+    STORAGE_PROVIDER = 'GCS'
+    ENABLED = TRUE
+    STORAGE_ALLOWED_LOCATIONS = ('gcs://indian-flight-pipeline-raw/exports/');
+CREATE OR REPLACE STAGE gcs_stage
+    URL = 'gcs://indian-flight-pipeline-raw/exports/'
+    STORAGE_INTEGRATION = gcs_integration
+    FILE_FORMAT = (TYPE = CSV FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
+
+-- ============================================
+-- 1. ROUTE SUMMARY
+-- ============================================
+CREATE OR REPLACE TABLE INDIAN_FLIGHTS.ANALYTICS.ROUTE_SUMMARY (
+    ORIGIN              VARCHAR,
+    DESTINATION         VARCHAR,
+    TOTAL_FLIGHTS       INT,
+    AVG_DURATION_MINS   FLOAT,
+    MIN_DURATION_MINS   FLOAT,
+    MAX_DURATION_MINS   FLOAT,
+    UNIQUE_AIRCRAFT     INT
+);
+USE DATABASE INDIAN_FLIGHTS;
+USE SCHEMA ANALYTICS;
+
+COPY INTO INDIAN_FLIGHTS.ANALYTICS.ROUTE_SUMMARY
+FROM @gcs_stage/route_summary/
+FILE_FORMAT = (TYPE = CSV FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
+
+-- ============================================
+-- 2. AIRPORT DAILY TRAFFIC
+-- ============================================
+
+CREATE OR REPLACE TABLE INDIAN_FLIGHTS.ANALYTICS.AIRPORT_DAILY_TRAFFIC (
+    AIRPORT_NAME        VARCHAR,
+    AIRPORT_ICAO        VARCHAR,
+    FLIGHT_DATE         DATE,
+    ARRIVALS            INT,
+    DEPARTURES          INT,
+    TOTAL_MOVEMENTS     INT
+);
+
+COPY INTO INDIAN_FLIGHTS.ANALYTICS.AIRPORT_DAILY_TRAFFIC
+FROM @gcs_stage/airport_daily_traffic/
+FILE_FORMAT = (TYPE = CSV FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
+
+-- ============================================
+-- 3. FLIGHT FEATURES
+-- ============================================
+
+CREATE OR REPLACE TABLE INDIAN_FLIGHTS.ANALYTICS.FLIGHT_FEATURES (
+    ICAO24              VARCHAR,
+    CALLSIGN            VARCHAR,
+    ORIGIN              VARCHAR,
+    DESTINATION         VARCHAR,
+    AIRPORT_NAME        VARCHAR,
+    FLIGHT_TYPE         VARCHAR,
+    FLIGHT_DURATION_MINS FLOAT,
+    FLIGHT_DATE         DATE,
+    DAY_OF_WEEK         INT,
+    DEPARTURE_HOUR      INT,
+    DURATION_CATEGORY   VARCHAR,
+    ROUTE_TYPE          VARCHAR
+);
+
+COPY INTO INDIAN_FLIGHTS.ANALYTICS.FLIGHT_FEATURES
+FROM @gcs_stage/flight_features/
+FILE_FORMAT = (TYPE = CSV FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
+
+-- ============================================
+-- VERIFY
+-- ============================================
+
+SELECT COUNT(*) FROM INDIAN_FLIGHTS.ANALYTICS.ROUTE_SUMMARY;
+
+SELECT COUNT(*) FROM INDIAN_FLIGHTS.ANALYTICS.AIRPORT_DAILY_TRAFFIC;
+
+SELECT COUNT(*) FROM INDIAN_FLIGHTS.ANALYTICS.FLIGHT_FEATURES;
