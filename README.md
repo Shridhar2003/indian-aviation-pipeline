@@ -71,7 +71,6 @@ indian-aviation-pipeline/
 ├── transforms/
 │   └── bigquery_transforms.sql      # BigQuery SQL transforms
 ├── .env.example                     # Environment variable template
-├── requirements.txt                 # Python dependencies
 └── README.md
 ```
 
