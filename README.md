@@ -56,6 +56,13 @@ Data Studio Dashboard (3 pages)
 
 > Dashboard built on Snowflake data connected via Data Studio's partner connector.
 
+
+<img width="1653" height="580" alt="image" src="https://github.com/user-attachments/assets/df006ccb-c3d9-4483-9840-b6d5d204792d" />
+
+
+<img width="1650" height="541" alt="image" src="https://github.com/user-attachments/assets/6b1dcadb-f456-4f74-8ab8-9a5907a922f8" />
+
+
 <img width="1655" height="658" alt="image" src="https://github.com/user-attachments/assets/4ca6d203-bf16-44ea-adfd-9e1c9a964b35" />
 
 
