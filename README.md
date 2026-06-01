@@ -68,8 +68,9 @@ indian-aviation-pipeline/
 │   └── fetch_opensky.py             # OpenSky API ingestion script
 ├── upload/
 │   └── upload_to_gcs.py             # GCS upload script
-├── bigquery_transforms.sql      # BigQuery SQL transforms
+├── bigquery_transforms.sql          # BigQuery SQL transforms
 ├── .env.example                     # Environment variable template
+├──snowflake_setup.sql               #Snowflake setup and loading
 └── README.md
 ```
 
